@@ -26,10 +26,10 @@
  * ```
  */
 
+import "../node_modules/ecam.css/ecam.css";
 import "./app.tsx";
 import "./components/status/status.scss";
 import "./index.css";
-
 console.log(
   '👋 This message is being logged by "renderer.js", included via webpack'
 );

@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import ECAM from "./ecam/ECAM";
 import Status from "./status/Status";
 
 interface ServerStatus {
-  [key: string]: string;
+  [key: string]: {
+    state: string;
+    statusCode: number | null;
+  };
 }
 
 const Home = () => {
@@ -13,29 +17,34 @@ const Home = () => {
   ];
 
   const initialStatus: ServerStatus = serverList.reduce(
-    (acc, serverURL) => ({ ...acc, [serverURL]: "offline" }),
+    (acc, serverURL) => ({
+      ...acc,
+      [serverURL]: { state: "offline", statusCode: null },
+    }),
     {}
   );
 
   const [status, setStatus] = useState<ServerStatus>(initialStatus);
 
-  useEffect(() => {
-    const pingServer = async (serverURL: string) => {
-      try {
-        const response = await fetch(serverURL);
-        if (response.status === 200) {
-          setStatus((prevStatus) => ({ ...prevStatus, [serverURL]: "online" }));
-        } else {
-          setStatus((prevStatus) => ({
-            ...prevStatus,
-            [serverURL]: "offline",
-          }));
-        }
-      } catch (error) {
-        setStatus((prevStatus) => ({ ...prevStatus, [serverURL]: "error" }));
-      }
-    };
+  const pingServer = async (serverURL: string) => {
+    try {
+      const response = await fetch(serverURL);
+      setStatus((prevStatus) => ({
+        ...prevStatus,
+        [serverURL]: {
+          state: response.status === 200 ? "online" : "offline",
+          statusCode: response.status,
+        },
+      }));
+    } catch (error) {
+      setStatus((prevStatus) => ({
+        ...prevStatus,
+        [serverURL]: { state: "error", statusCode: null },
+      }));
+    }
+  };
 
+  useEffect(() => {
     const intervalIds: NodeJS.Timeout[] = [];
 
     serverList.forEach((serverURL) => {
@@ -52,25 +61,20 @@ const Home = () => {
 
   return (
     <div>
+      <head>
+        <title>Squeegee Status</title>
+      </head>
       <div className="drag-region" />
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          gap: "10px",
         }}
       >
         <Status status={status} />
-        {/* <div
-          style={{
-            display: "flex",
-            gap: "10px",
-          }}
-        >
-          <div className={`status-annunciator ${status}`}>
-            <span className="status-text"></span>
-          </div>
-        </div> */}
+        <ECAM status={status} />
       </div>
     </div>
   );

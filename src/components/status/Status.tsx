@@ -2,7 +2,10 @@ import React from "react";
 
 type StatusProps = {
   status: {
-    [key: string]: string;
+    [key: string]: {
+      state: string;
+      statusCode: number | null;
+    };
   };
 };
 
@@ -24,7 +27,7 @@ const Status: React.FC<StatusProps> = ({ status }) => {
         {serverList.map((serverURL) => (
           <div
             key={serverURL}
-            className={`status-annunciator ${status[serverURL]}`}
+            className={`status-annunciator ${status[serverURL].state}`}
           >
             <span className="status-text">
               {serverURL === "https://app.squeeg.ee"
