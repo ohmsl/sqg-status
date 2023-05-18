@@ -1,4 +1,5 @@
 import React from "react";
+import { serverList } from "../Home";
 
 type StatusProps = {
   status: {
@@ -8,12 +9,6 @@ type StatusProps = {
     };
   };
 };
-
-const serverList = [
-  "https://dev.squeeg.ee",
-  "https://staging.squeeg.ee",
-  "https://app.squeeg.ee",
-];
 
 const Status: React.FC<StatusProps> = ({ status }) => {
   return (
@@ -36,6 +31,24 @@ const Status: React.FC<StatusProps> = ({ status }) => {
                 ? "DEV"
                 : serverURL === "https://staging.squeeg.ee"
                 ? "STAG"
+                : serverURL === "https://api01.sqgee.com/"
+                ? "API01"
+                : serverURL === "https://api02.sqgee.com/"
+                ? "API02"
+                : serverURL === "https://api03.sqgee.com/"
+                ? "API03"
+                : serverURL === "https://api04.sqgee.com/"
+                ? "API04"
+                : serverURL === "https://api05.sqgee.com/"
+                ? "API05"
+                : serverURL === "https://api06.sqgee.com/"
+                ? "API06"
+                : serverURL === "https://api07.sqgee.com/"
+                ? "API07"
+                : serverURL === "https://api08.sqgee.com/"
+                ? "API08"
+                : serverURL === "https://api09.sqgee.com/"
+                ? "API09"
                 : "ERROR"}{" "}
               Fail
             </span>
