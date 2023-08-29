@@ -30,23 +30,6 @@
   margin-left: 0;
 }
 
-:root {
-  --green: #00c200;
-  --amber: #ff9900;
-  --red: #d62631;
-  --azure: #4d92ca;
-  --lighterazure: #66b1ee;
-  --gray: #535353;
-  --lightgray: #747474;
-  --button-text: #d3d3d3;
-  --background: #2f2f3a;
-  --lighter-background: #27272b;
-  --secondary-background: #3c5064;
-  background: var(--background);
-  color: white;
-  text-decoration: none;
-}
-
 .text {
   font-size: 30px;
 }

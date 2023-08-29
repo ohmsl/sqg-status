@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     setIsLoaded(false);
     if (!serverListFromLocalStorage) {
-      localStorage.setItem("serverList", JSON.stringify(serverList));
+      localStorage.setItem("serverList", JSON.stringify(defaultServerList));
     } else {
       setServerList(JSON.parse(serverListFromLocalStorage));
     }
