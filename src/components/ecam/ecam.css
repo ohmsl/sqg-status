@@ -1,32 +1,342 @@
 @font-face {
-    font-family: 'Source Code Pro';
-    src: url('./SourceCodePro-VariableFont_wght.ttf');
+  font-family: "Source Code Pro";
+  src: url("./SourceCodePro-VariableFont_wght.ttf");
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .ecam {
-    width: 100%;
-    height: 70px;
-    background: #000;
-    border-radius: 10px;
-    padding: 10px;
-    font-family: 'Source Code Pro', monospace;
-    overflow-y: scroll;
+  width: 100%;
+  height: 70px;
+  background: #000;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: "Source Code Pro", monospace;
+  overflow-y: scroll;
 }
 
-
 .ecamdivider {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .text {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .alert {
-    margin-left: 0;
+  margin-left: 0;
+}
+
+:root {
+  --green: #00c200;
+  --amber: #ff9900;
+  --red: #d62631;
+  --azure: #4d92ca;
+  --lighterazure: #66b1ee;
+  --gray: #535353;
+  --lightgray: #747474;
+  --button-text: #d3d3d3;
+  --background: #2f2f3a;
+  --lighter-background: #27272b;
+  --secondary-background: #3c5064;
+  background: var(--background);
+  color: white;
+  text-decoration: none;
+}
+
+.text {
+  font-size: 30px;
+}
+
+.ecamheader {
+  font-size: 30px;
+}
+
+.warningdiv {
+  border-width: 1px;
+  border-style: solid;
+  display: inline-block;
+  border-color: var(--amber);
+}
+
+.ecamdivider {
+  border-top: 1px solid lightgray;
+}
+
+/*  ECAM Actions  */
+.actionsdiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.alert {
+  border-width: 1px;
+  border-style: solid;
+  display: inline-block;
+}
+
+.green {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.amber {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+.red {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.action {
+  color: var(--azure);
+  margin-left: 20px;
+}
+
+.actiontext {
+  color: white;
+  margin-left: 30px;
+}
+
+/*   A350 Style Question   */
+.questionmark {
+  border-width: 1px;
+  border-style: solid;
+  border-color: white;
+  background-color: var(--secondary-background);
+  width: 60px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 37px;
+  font-weight: 300;
+  margin-top: 0px;
+  position: relative;
+  left: -30px;
+}
+
+.questiondiv {
+  border-left-width: 1px;
+  border-left-style: solid;
+  display: flex;
+  flex-direction: column;
+  border-color: white;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+.questiontext {
+  margin-top: -72px;
+  margin-left: 40px;
+  font-size: 29px;
+}
+
+.a350form {
+  margin-left: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.a350formlabel {
+  font-size: 29px;
+  margin-right: 30px;
+  margin-left: 10px;
+}
+
+/*  MCDU UI Elements  */
+.button {
+  background-color: var(--gray);
+  color: var(--button-text);
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  min-width: 200px;
+  border-width: 0.5px;
+  border-color: var(--button-text);
+  border-style: solid;
+  font-size: 25px;
+  outline: none;
+}
+
+.dropdownbutton {
+  justify-content: space-between;
+  padding-right: 5px;
+  padding-left: 0px;
+}
+
+.darkdropdown {
+  background-color: black;
+}
+
+.dropdownicon {
+  background-color: var(--gray);
+  width: 20px;
+  padding-left: 5px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdowntext {
+  padding-left: 5px;
+  font-size: 25px;
+  width: 100%;
+  text-align: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--lightgray);
+  min-width: 189px;
+  z-index: 1;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-width: 0px;
+}
+
+.dropdown-content a {
+  color: var(--button-text);
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.dropdown:hover {
+  border-bottom-width: 0px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/*  Radio Button  */
+
+.radiodiv {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: var(--gray);
+  border-radius: 50%;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  width: 120%;
+  height: 120%;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.container .checkmarkgreen:after {
+  background: var(--green);
+}
+
+.defaultcursor {
+  cursor: unset;
+}
+
+/*  Text Input  */
+.textinput {
+  background-color: #00000000;
+  border-color: var(--lightgray);
+  border-style: solid;
+  text-align: center;
+  outline: none;
+  border-radius: 0px;
+  color: var(--azure);
+  font-family: "Source Code Pro", monospace;
+}
+
+/*  Popup  */
+.popup {
+  display: block;
+  flex-direction: column;
+  text-align: center;
+  background-color: var(--lighter-background);
+  width: 300px;
+  height: 120px;
+  border-width: 0.5px;
+  border-color: var(--button-text);
+  border-style: solid;
+  position: relative;
+}
+
+.popuptext {
+  font-size: 20px;
+}
+
+.popupbutton {
+  min-width: 100px;
+  margin: 0px 0px 0px 0px;
+  bottom: 0px;
+  position: absolute;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+/*  Hover for hoverable buttons  */
+.hoverable:hover {
+  border-color: var(--lighterazure);
+  box-shadow: 2px 2px 0px 0px var(--lighterazure),
+    -2px -2px 0px 0px var(--lighterazure), 2px -2px 0px 0px var(--lighterazure),
+    -2px 2px 0px 0px var(--lighterazure);
 }

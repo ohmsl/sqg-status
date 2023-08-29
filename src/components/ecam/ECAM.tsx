@@ -1,5 +1,6 @@
 import React from "react";
 import "./ecam.css";
+import { ServerList } from "../settings/Settings";
 
 type ECAMProps = {
   status: {
@@ -8,12 +9,13 @@ type ECAMProps = {
       statusCode: number | null;
     };
   };
+  serverList: Array<ServerList>;
 };
 
 const getECAMMessage = (
   failedServers: {
-    serverURL: string;
-    serverName: string;
+    url: string;
+    tag: string;
   }[],
   status: {
     [key: string]: {
@@ -36,7 +38,7 @@ const getECAMMessage = (
 
   if (failedServers.length > 0) {
     const messages = failedServers.map((server) => {
-      const { serverURL, serverName } = server;
+      const { url: serverURL, tag: serverName } = server;
       const { statusCode } = status[serverURL];
       let error, info, message;
       switch (statusCode) {
@@ -158,25 +160,12 @@ const getECAMMessage = (
   }
 };
 
-const ECAM: React.FC<ECAMProps> = ({ status }) => {
-  const serverList = [
-    { serverURL: "https://dev.squeeg.ee", serverName: "DEV" },
-    { serverURL: "https://staging.squeeg.ee", serverName: "STAG" },
-    { serverURL: "https://api01.sqgee.com/", serverName: "API01" },
-    { serverURL: "https://api02.sqgee.com/", serverName: "API02" },
-    { serverURL: "https://api03.sqgee.com/", serverName: "API03" },
-    { serverURL: "https://api04.sqgee.com/", serverName: "API04" },
-    { serverURL: "https://api05.sqgee.com/", serverName: "API05" },
-    { serverURL: "https://api06.sqgee.com/", serverName: "API06" },
-    { serverURL: "https://api07.sqgee.com/", serverName: "API07" },
-    { serverURL: "https://api08.sqgee.com/", serverName: "API08" },
-    { serverURL: "https://api09.sqgee.com/", serverName: "API09" },
-  ];
+const ECAM: React.FC<ECAMProps> = ({ status, serverList }) => {
 
-  const failedServers = serverList.filter((s) => {
+  const failedServers = serverList.filter((server) => {
     return (
-      status[s.serverURL].state === "offline" ||
-      status[s.serverURL].state === "error"
+      status[server.url].state === "offline" ||
+      status[server.url].state === "error"
     );
   });
 

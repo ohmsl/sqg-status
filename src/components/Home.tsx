@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ECAM from "./ecam/ECAM";
+import Settings, { ServerList } from "./settings/Settings";
 import Status from "./status/Status";
+import { defaultServerList } from "./settings/defaults";
 
 interface ServerStatus {
   [key: string]: {
@@ -9,25 +11,23 @@ interface ServerStatus {
   };
 }
 
-export const serverList = [
-  "https://dev.squeeg.ee",
-  "https://staging.squeeg.ee",
-  "https://api01.sqgee.com/",
-  "https://api02.sqgee.com/",
-  "https://api03.sqgee.com/",
-  "https://api04.sqgee.com/",
-  "https://api05.sqgee.com/",
-  "https://api06.sqgee.com/",
-  "https://api07.sqgee.com/",
-  "https://api08.sqgee.com/",
-  "https://api09.sqgee.com/",
-];
-
 const Home = () => {
+  const [serverList, setServerList] = useState<Array<ServerList>>(JSON.parse(localStorage.getItem("serverList")) || defaultServerList);
+
+  const serverListFromLocalStorage = localStorage.getItem("serverList");
+  useEffect(() => {
+    setIsLoaded(false);
+    if (!serverListFromLocalStorage) {
+      localStorage.setItem("serverList", JSON.stringify(serverList));
+    } else {
+      setServerList(JSON.parse(serverListFromLocalStorage));
+    }
+  }, [serverListFromLocalStorage]);
+
   const initialStatus: ServerStatus = serverList.reduce(
-    (acc, serverURL) => ({
+    (acc, server) => ({
       ...acc,
-      [serverURL]: { state: "offline", statusCode: null },
+      [server.url]: { state: "offline", statusCode: null },
     }),
     {}
   );
@@ -35,15 +35,15 @@ const Home = () => {
   const [status, setStatus] = useState<ServerStatus>(initialStatus);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  const pingServer = async (serverURL: string) => {
+  const pingServer = async (server: string) => {
     try {
-      const response = await fetch(serverURL);
+      const response = await fetch(server);
       console.log(
-        `${serverURL} responded with ${response.status} ${response.statusText}`
+        `${server} responded with ${response.status} ${response.statusText}`
       );
       setStatus((prevStatus) => ({
         ...prevStatus,
-        [serverURL]: {
+        [server]: {
           state: response.status === 200 ? "online" : "offline",
           statusCode: response.status,
         },
@@ -51,7 +51,7 @@ const Home = () => {
     } catch (error) {
       setStatus((prevStatus) => ({
         ...prevStatus,
-        [serverURL]: { state: "error", statusCode: null },
+        [server]: { state: "error", statusCode: null },
       }));
     }
   };
@@ -60,11 +60,11 @@ const Home = () => {
     console.log(serverList);
     const intervalIds: NodeJS.Timeout[] = [];
 
-    const pingPromises = serverList.map((serverURL) => {
+    const pingPromises = serverList.map((server) => {
       return new Promise<void>((resolve, reject) => {
         const intervalId = setInterval(async () => {
           try {
-            await pingServer(serverURL);
+            await pingServer(server.url);
             resolve();
           } catch (error) {
             console.log(error);
@@ -84,7 +84,7 @@ const Home = () => {
         clearInterval(intervalId);
       });
     };
-  }, []);
+  }, [serverList]);
 
   return (
     <>
@@ -101,8 +101,13 @@ const Home = () => {
             gap: "10px",
           }}
         >
-          <Status status={status} />
-          {isLoaded && <ECAM status={status} />}
+          <Settings />
+          <Status serverList={serverList} status={status} />
+          {isLoaded && (
+            <>
+              <ECAM serverList={serverList} status={status} />
+            </>
+          )}
         </div>
       </div>
     </>

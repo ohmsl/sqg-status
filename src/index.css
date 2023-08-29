@@ -1,14 +1,37 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
 }
 
+html {
+  button {
+    cursor: unset;
+  }
+
+  input {
+    cursor: default;
+  }
+
+  a {
+    cursor: default;
+  }
+
+  label {
+    cursor: default;
+  }
+
+  .container {
+    cursor: default;
+  }
+}
+
 .drag-region {
-  width: 100%;
+  width: 90%;
   height: 30px;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   cursor: move;
   -webkit-app-region: drag;
 }

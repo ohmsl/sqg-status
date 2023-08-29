@@ -20,7 +20,7 @@ const config: ForgeConfig = {
   plugins: [
     new WebpackPlugin({
       devContentSecurityPolicy:
-        "default-src 'self'; connect-src 'self' dev.squeeg.ee staging.squeeg.ee app.squeeg.ee api01.sqgee.com api02.sqgee.com api03.sqgee.com api04.sqgee.com api05.sqgee.com api06.sqgee.com api06.sqgee.com api07.sqgee.com api08.sqgee.com api09.sqgee.com; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; object-src 'self';",
+        "default-src 'self'; connect-src 'self' * dev.squeeg.ee staging.squeeg.ee app.squeeg.ee api01.sqgee.com api02.sqgee.com api03.sqgee.com api04.sqgee.com api05.sqgee.com api06.sqgee.com api06.sqgee.com api07.sqgee.com api08.sqgee.com api09.sqgee.com; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; object-src 'self';",
       mainConfig,
       renderer: {
         config: rendererConfig,

@@ -26,7 +26,6 @@
  * ```
  */
 
-import "../node_modules/ecam.css/ecam.css";
 import "./app.tsx";
 import "./components/status/status.scss";
 import "./index.css";
