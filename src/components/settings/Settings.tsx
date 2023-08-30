@@ -3,12 +3,15 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import {
   Box,
   Button,
+  Checkbox,
   Dialog,
+  FormControlLabel,
   IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { defaultServerList } from "./defaults";
 
 export type ServerList = {
   tag: string;
@@ -18,12 +21,18 @@ export type ServerList = {
 const Settings = () => {
   const [open, setOpen] = useState(false);
   const [serverList, setServerList] = useState<Array<ServerList>>(
-    JSON.parse(localStorage.getItem("serverList")) || []
+    JSON.parse(localStorage.getItem("serverList")) || defaultServerList
   );
 
   const [tag, setTag] = useState<string>("");
   const [url, setUrl] = useState<string>("");
-  const [serverListString, setServerListString] = useState<string>(JSON.stringify(serverList, null, 2));
+  const [serverListString, setServerListString] = useState<string>(
+    JSON.stringify(serverList, null, 2)
+  );
+
+  const [transparent, setTransparent] = useState<boolean>(
+    localStorage.getItem("transparent") ? false : true
+  );
 
   const handleAddServer = () => {
     const newServerList = [...serverList, { tag, url }];
@@ -36,6 +45,11 @@ const Settings = () => {
   const handleSave = () => {
     setServerList(JSON.parse(serverListString));
     localStorage.setItem("serverList", JSON.stringify(serverList));
+    if (transparent) {
+      localStorage.removeItem("transparent");
+    } else {
+      localStorage.setItem("transparent", "false");
+    }
     setOpen(false);
     window.location.reload();
   };
@@ -81,7 +95,18 @@ const Settings = () => {
           >
             SAVE
           </Typography>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    onChange={() => setTransparent(!transparent)}
+                    checked={transparent}
+                  />
+                }
+                label="Transparent"
+              />
+            </Box>
             <Box>
               <TextField
                 label="Server Tag"

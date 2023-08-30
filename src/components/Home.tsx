@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ECAM from "./ecam/ECAM";
 import Settings, { ServerList } from "./settings/Settings";
-import Status from "./status/Status";
 import { defaultServerList } from "./settings/defaults";
+import Status from "./status/Status";
 
 interface ServerStatus {
   [key: string]: {
@@ -12,7 +12,9 @@ interface ServerStatus {
 }
 
 const Home = () => {
-  const [serverList, setServerList] = useState<Array<ServerList>>(JSON.parse(localStorage.getItem("serverList")) || defaultServerList);
+  const [serverList, setServerList] = useState<Array<ServerList>>(
+    JSON.parse(localStorage.getItem("serverList")) || defaultServerList
+  );
 
   const serverListFromLocalStorage = localStorage.getItem("serverList");
   useEffect(() => {
@@ -57,6 +59,12 @@ const Home = () => {
   };
 
   useEffect(() => {
+    if (!localStorage.getItem("transparent")) {
+      document.body.style.backgroundColor = "transparent";
+    } else {
+      document.body.style.backgroundColor = "#0f0f18";
+    }
+
     console.log(serverList);
     const intervalIds: NodeJS.Timeout[] = [];
 
