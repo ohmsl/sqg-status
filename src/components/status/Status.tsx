@@ -1,5 +1,6 @@
 import React from "react";
 import { ServerList } from "../settings/Settings";
+import "./status.scss";
 
 type StatusProps = {
   status: {
@@ -25,10 +26,7 @@ const Status: React.FC<StatusProps> = ({ status, serverList }) => {
             key={serverURL.tag}
             className={`status-annunciator ${status[serverURL.url].state}`}
           >
-            <span className="status-text">
-              {serverURL.tag}{" "}
-              Fail
-            </span>
+            <span className="status-text">{serverURL.tag} Fail</span>
           </div>
         ))}
       </div>

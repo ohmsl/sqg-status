@@ -1,4 +1,6 @@
+import { notification } from "@tauri-apps/api";
 import React, { useEffect, useState } from "react";
+import "../index.css";
 import ECAM from "./ecam/ECAM";
 import Settings, { ServerList } from "./settings/Settings";
 import { defaultServerList } from "./settings/defaults";
